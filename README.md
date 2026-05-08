@@ -1,5 +1,5 @@
 # SPONSOR-FOR-CARTSYNC-SHOPIFY
-<p align="center">
+<p align="left">
   <img src="https://files.catbox.moe/xax2ur.jpg" alt="Cartsync" width="100">
 </p>
 Powered By Ecom,
