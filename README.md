@@ -1,0 +1,2 @@
+# SPONSOR-FOR-CARTSYNC-SHOPIFY
+Powered By Ecom,
