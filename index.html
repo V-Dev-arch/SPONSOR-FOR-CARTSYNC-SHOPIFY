@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CartSync - Persistent Cart Official</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #050816;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --accent: #3b82f6;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: var(--accent);
+      filter: blur(180px);
+      opacity: 0.18;
+      border-radius: 50%;
+      top: -200px;
+      right: -200px;
+      z-index: -1;
+      animation: floatGlow 8s ease-in-out infinite;
+    }
+
+    @keyframes floatGlow {
+      50% {
+        transform: translateY(40px) translateX(-20px);
+      }
+    }
+
+    header {
+      width: 100%;
+      padding: 22px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: rgba(5, 8, 22, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 999;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    nav a {
+      color: #dbe4ff;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 8%;
+      gap: 70px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 320px;
+      animation: fadeUp 1s ease;
+    }
+
+    .hero-text h1 {
+      font-size: 68px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .hero-text h1 span {
+      color: var(--accent);
+    }
+
+    .hero-text p {
+      color: #94a3b8;
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 650px;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 28px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 25px rgba(59,130,246,0.45);
+    }
+
+    .primary:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .secondary {
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-card {
+      flex: 1;
+      min-width: 320px;
+      display: flex;
+      justify-content: center;
+      animation: floatCard 5s ease-in-out infinite;
+    }
+
+    .dashboard {
+      width: 100%;
+      max-width: 470px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    .dashboard-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .small-card {
+      width: 48%;
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .small-card h2 {
+      font-size: 30px;
+      margin-top: 10px;
+    }
+
+    .sync-box {
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .sync-circle {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      box-shadow: 0 0 35px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    .features {
+      padding: 120px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 70px;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 35px;
+      transition: 0.35s;
+      backdrop-filter: blur(10px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 0 35px rgba(59,130,246,0.15);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 14px;
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    .feature-card p {
+      color: #94a3b8;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .about {
+      padding: 120px 8%;
+      text-align: center;
+    }
+
+    .about-box {
+      max-width: 750px;
+      margin: auto;
+      background: rgba(255,255,255,0.04);
+      border-radius: 28px;
+      padding: 50px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .about-box h2 {
+      font-size: 42px;
+      margin-bottom: 18px;
+    }
+
+    .about-box p {
+      color: #94a3b8;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .email {
+      margin-top: 25px;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      color: #64748b;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 60px;
+    }
+
+    @keyframes pulse {
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes floatCard {
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media(max-width: 900px) {
+
+      .hero-text h1 {
+        font-size: 50px;
+      }
+
+      .section-title {
+        font-size: 38px;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-glow"></div>
+
+  <header>
+    <div class="logo">CartSync</div>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#">More</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-text">
+      <h1>
+        Persistent Cart <span>Sync</span><br>
+        Across Every Device
+      </h1>
+
+      <p>
+        CartSync automatically saves customer carts, restores them across devices,
+        and keeps everything synced in real time using Shopify's official APIs.
+        No theme editing. No setup headaches. Just seamless cart persistence.
+      </p>
+
+      <div class="buttons">
+        <a href="#" class="btn primary">Install App</a>
+        <a href="#features" class="btn secondary">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+
+      <div class="dashboard">
+
+        <div class="dashboard-top">
+
+          <div class="small-card">
+            <p>Recovered Carts</p>
+            <h2>18.2K</h2>
+          </div>
+
+          <div class="small-card">
+            <p>Live Syncs</p>
+            <h2>99%</h2>
+          </div>
+
+        </div>
+
+        <div class="sync-box">
+
+          <div class="sync-circle">
+            ↻
+          </div>
+
+          <h2 style="margin-top:25px;">
+            Real-Time Cart Sync
+          </h2>
+
+          <p style="margin-top:12px;color:#94a3b8;line-height:1.7;">
+            Restore saved carts instantly across mobile,
+            desktop, and returning sessions automatically.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="features" id="features">
+
+    <h2 class="section-title">
+      Powerful <span>Features</span>
+    </h2>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <h3>Automatic Cart Saving</h3>
+        <p>
+          Customer carts are securely saved to their account automatically in the background.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Cross Device Restore</h3>
+        <p>
+          Restore saved carts instantly on any device a customer signs in from.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Merge or Replace</h3>
+        <p>
+          Choose whether restored carts merge with current items or fully replace them.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Real-Time Syncing</h3>
+        <p>
+          Cart changes sync automatically on every add, remove, or quantity update.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Theme Auto Detection</h3>
+        <p>
+          Automatically detects cart drawers, cart pages, and cart icons.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>No Theme Editing</h3>
+        <p>
+          Works instantly without modifying theme files or adding manual selectors.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Official Shopify APIs</h3>
+        <p>
+          Built using Shopify App Proxy and official APIs for stable performance.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Persistent Sessions</h3>
+        <p>
+          Customers can return later and continue shopping without losing cart items.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Faster Checkout</h3>
+        <p>
+          Reduce abandoned carts and improve conversion rates with saved cart recovery.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Mobile Optimized</h3>
+        <p>
+          Smooth syncing and restoration experience across all mobile devices.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Modern Dashboard</h3>
+        <p>
+          Clean analytics and sync management designed for modern Shopify stores.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Easy Integration</h3>
+        <p>
+          Install once and let CartSync handle the rest automatically.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="about" id="about">
+
+    <div class="about-box">
+
+      <h2>About CartSync</h2>
+
+      <p>
+        CartSync is built for Shopify stores that want seamless persistent cart syncing
+        without complex setup or theme customization.
+      </p>
+
+      <p>
+        Designed with performance, reliability, and simplicity in mind.
+      </p>
+
+      <div class="email">
+        Email: __________
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 CartSync - Persistent Cart Official
+  </footer>
+
+  <script>
+
+    const colors = [
+      "#3b82f6",
+      "#8b5cf6",
+      "#06b6d4",
+      "#22c55e",
+      "#ec4899",
+      "#f97316"
+    ];
+
+    const randomColor =
+      colors[Math.floor(Math.random() * colors.length)];
+
+    document.documentElement.style
+      .setProperty('--accent', randomColor);
+
+  </script>
+
+</body>
+</html>
