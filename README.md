@@ -22,3 +22,5 @@ CartSync saves a logged-in customer's cart to their account and restores it when
 
 • Auto-detects your theme's cart icon, drawer, and cart page
 </p>
+## OFFICIAL WEBSITE 
+For further queries visit our official website: https://v-dev-arch.github.io/SPONSOR-FOR-CARTSYNC-SHOPIFY/ OR search Google 
