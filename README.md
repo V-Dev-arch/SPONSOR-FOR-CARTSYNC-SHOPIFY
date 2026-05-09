@@ -1,6 +1,6 @@
 # SPONSOR-FOR-CARTSYNC-SHOPIFY
 <p align="left">
-  <img src="https://v-dev-arch.github.io/SPONSOR-FOR-CARTSYNC-SHOPIFY/#features" alt="Cartsync" width="100">
+  <img src="https://files.catbox.moe/eon4ms.jpg"SPONSOR-FOR-CARTSYNC-SHOPIFY/#features" alt="Cartsync" width="100">
 </p>
 Powered By Ecom,
 Sponsor project for Shopify app "Cartsync - persistent cart"
