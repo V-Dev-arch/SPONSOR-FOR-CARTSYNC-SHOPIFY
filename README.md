@@ -39,6 +39,6 @@ For further queries visit our official website: <a href="https://github.com/V-De
   "
   onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 6px 18px rgba(0,0,0,0.4)'"
   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'">
-    🚀 View GitHub Repo
+    Website 
   </button>
 </a>
